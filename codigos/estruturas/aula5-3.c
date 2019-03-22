@@ -19,10 +19,12 @@ void desenhar_personagem(struct personagem p) {
 
 void seguir(struct personagem p) {
   p.x++;
+  desenhar_personagem(p);
 }
 
 void voltar(struct personagem p) {
   p.x--;
+  desenhar_personagem(p);
 }
 
 void subir(struct personagem p) {
@@ -32,12 +34,13 @@ void subir(struct personagem p) {
 
 void descer(struct personagem p) {
   p.y--;
+  desenhar_personagem(p);
 }
 
 char ler_teclado() {
   char c;
   printf("> ");
-  scanf("%c", &c);
+  scanf(" %c", &c);;
   return c;
 }
 
@@ -45,19 +48,19 @@ char ler_teclado() {
 void processar_tecla(char tecla, struct personagem p) {
   switch(tecla) {
     case 'w':
-      printf("Subindo...");
+      printf("Subindo...\n");
       subir(p);
       break;
     case  's':
-      printf("Descendo...");
+      printf("Descendo...\n");
       descer(p);
       break;
     case 'a':
-      printf("Voltando...");
+      printf("Voltando...\n");
       voltar(p);
       break;
     case 'd':
-      printf("Seguindo...");
+      printf("Seguindo...\n");
       seguir(p);
       break;
   }
