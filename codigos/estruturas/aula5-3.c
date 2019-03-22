@@ -17,24 +17,24 @@ void desenhar_personagem(struct personagem p) {
   printf("x: %f, y: %f, velocidade: %f\n", p.x, p.y, p.velocidade);
 }
 
-void seguir(struct personagem p) {
+struct personagem seguir(struct personagem p) {
   p.x++;
-  desenhar_personagem(p);
+  return p;
 }
 
-void voltar(struct personagem p) {
+struct personagem voltar(struct personagem p) {
   p.x--;
-  desenhar_personagem(p);
+  return p;
 }
 
-void subir(struct personagem p) {
+struct personagem subir(struct personagem p) {
   p.y++;
-  desenhar_personagem(p);
+  return p;
 }
 
-void descer(struct personagem p) {
+struct personagem descer(struct personagem p) {
   p.y--;
-  desenhar_personagem(p);
+  return p;
 }
 
 char ler_teclado() {
@@ -45,24 +45,26 @@ char ler_teclado() {
 }
 
 
-void processar_tecla(char tecla, struct personagem p) {
+struct personagem processar_tecla(char tecla, struct personagem p) {
   switch(tecla) {
     case 'w':
       printf("Subindo...\n");
-      subir(p);
+      return subir(p);
       break;
     case  's':
       printf("Descendo...\n");
-      descer(p);
+      return descer(p);
       break;
     case 'a':
       printf("Voltando...\n");
-      voltar(p);
+      return voltar(p);
       break;
     case 'd':
       printf("Seguindo...\n");
-      seguir(p);
+      return seguir(p);
       break;
+    default:
+      return p;
   }
 }
 
@@ -79,8 +81,8 @@ int main() {
   while(TRUE) {
     char tecla = ler_teclado();
     printf("A tecla pressionada foi: %c\n", tecla);
-    processar_tecla(tecla, mathias);
-    //desenhar_personagem(mathias);
+    mathias = processar_tecla(tecla, mathias);
+    desenhar_personagem(mathias);
   }
 
   return 0;
