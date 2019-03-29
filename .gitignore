@@ -1,4 +1,5 @@
 *.swp
 a.out
 gabarito
+.DS_Store
 *.o

@@ -1,25 +1,29 @@
-/* Neste exercicío você deve completar o programa abaixo de modo que:
- * 1. ele funcione. 
- * 2. Depois de fazê-lo funcionar, crie uma estrutura do tipo 'Relatório'
- *    contendo os campos, ano, total e media_mensal, bem como uma função para
- *    gerar o relatório e outra para imprimí-lo na tela. A função para calcular
- *    o relatório deve recer as notas e o ano a ser calculado e imprimir o 
- *    relatório na tela. 
- * 3. Uma função para imprimir o relatório na tela deve ser criada. */
-
+/* Crie uma função para identificar o mês que mais vende */
 
 #include <stdio.h>
 #include <stdlib.h>
 
 struct Nota {
-    /* defina a estrutura aqui */
+    int mes;
+    int ano;
+    char tipo;
+    float valor;
+};
+
+struct Relatorio {
+    int ano;
+    float total;
+    float media_mensal;
 };
 
 
+struct Nota* carregar_notas(char*, int numero_de_notas);
+void imprimir_notas(struct Nota*, int);
+int contar_notas(char*);
 
-struct Nota* carregar_notas(char* arquivo, int numero_de_notas);
-void imprimir_notas(struct Nota* notas, int numero_de_notas);
-int contar_notas(char* arquivo);
+/* funções da solução */
+struct Relatorio gerar_relatorio(struct Nota*, int, int);
+void imprime_relatorio(struct Relatorio);
 
 int main() {
     int numero_de_notas = 0;
@@ -28,10 +32,45 @@ int main() {
     
     numero_de_notas = contar_notas(nome_do_arquivo);
     notas_fiscais = carregar_notas(nome_do_arquivo, numero_de_notas);
-    imprimir_notas(notas_fiscais, numero_de_notas);
+    //imprimir_notas(notas_fiscais, numero_de_notas);
+    gerar_relatorio(notas_fiscais, 18, numero_de_notas);
 
     return 0;
 }
+
+struct Relatorio gerar_relatorio(struct Nota* notas, int ano, int numero_de_notas) {
+    
+    float subtotal = 0.0;
+    int contador = 0;
+    float media;
+
+    for(int i = 0; i < numero_de_notas; i++) {
+        if(notas[i].ano == ano) {
+            subtotal += notas[i].valor;
+            contador++;
+        }
+    }
+
+    media = subtotal / contador;
+
+    struct Relatorio r;
+    r.ano = ano;
+    r.total = subtotal;
+    r.media_mensal = media;
+
+    imprime_relatorio(r);
+
+    return r;
+}
+
+void imprime_relatorio(struct Relatorio relatorio) {
+    printf("#### Relatório #####\n");
+    printf("Ano: %d\n", relatorio.ano);
+    printf("Total: %f\n", relatorio.total);
+    printf("Média: %f\n", relatorio.media_mensal);
+    printf("#### Fim ####\n");
+}
+
 
 struct Nota* carregar_notas(char *arquivo, int numero_de_notas) {
     FILE* fp;

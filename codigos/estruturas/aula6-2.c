@@ -6,10 +6,9 @@ struct ponto {
     float y;
 };
 
-
 void multiplos_retornos(int *x, int *y) {
     *x = *x + *y;
-    *y = *x;
+    *y = *x + 1;
 }
 
 void atribui_ponteiro(int **x, int **y) {
@@ -19,6 +18,7 @@ void atribui_ponteiro(int **x, int **y) {
 void imprime_ponteiros(int *x, int *y) {
     printf("x aponta para -> %p\n", x);
     printf("y aponta para -> %p\n", y);
+    printf("x: %d, y: %d\n", *x, *y);
 }
 
 void imprime_ponto(struct ponto p) {
@@ -35,7 +35,7 @@ int main() {
     imprime_ponteiros(&a, &b);
     multiplos_retornos(&a, &b);
     printf("multiplos_retornos() -> a = %d, b = %d\n", a, b);
-    
+
     int *ap = &a;
     int *bp = &b;
 
@@ -43,5 +43,4 @@ int main() {
     imprime_ponteiros(ap, bp);
 
     return 0;
-} 
-
+}
