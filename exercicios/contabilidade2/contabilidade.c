@@ -20,10 +20,11 @@ struct Relatorio {
 struct Nota* carregar_notas(char*, int numero_de_notas);
 void imprimir_notas(struct Nota*, int);
 int contar_notas(char*);
-
-/* funções da solução */
 struct Relatorio gerar_relatorio(struct Nota*, int, int);
 void imprime_relatorio(struct Relatorio);
+/* funções da solução */
+int melhor_mes(struct Nota*, int);
+
 
 int main() {
     int numero_de_notas = 0;
@@ -33,7 +34,8 @@ int main() {
     numero_de_notas = contar_notas(nome_do_arquivo);
     notas_fiscais = carregar_notas(nome_do_arquivo, numero_de_notas);
     //imprimir_notas(notas_fiscais, numero_de_notas);
-    gerar_relatorio(notas_fiscais, 18, numero_de_notas);
+    //gerar_relatorio(notas_fiscais, 18, numero_de_notas);
+    melhor_mes(notas_fiscais, numero_de_notas);
 
     return 0;
 }
@@ -117,3 +119,23 @@ void imprimir_notas(struct Nota* notas, int numero_de_notas) {
     }
 }
 
+int melhor_mes(struct Nota* notas, int numero_de_notas) {
+    int contadores[12] = {0};
+    for(int i = 0; i < numero_de_notas; i++) {
+        contadores[notas[i].mes - 1]++;
+    }
+
+    for(int i = 0; i < 12; i++) {
+        printf("%d - ", contadores[i]);
+    }
+    
+    int mes = 1;
+    for(int i = 0; i < 12; i++) { 
+        if(contadores[i] > contadores[mes - 1]) {
+            mes = i + 1;
+        }
+    }
+
+    printf("Mês com mais vendas é: %d", mes);
+    return mes;
+}
